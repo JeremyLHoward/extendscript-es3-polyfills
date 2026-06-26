@@ -1,2 +1,45 @@
-# extendscript-es3-polyfills
-Shims adding Array indexOf/forEach/map/filter/includes and JSON parse/stringify to ExtendScript
+# ExtendScript ES3 Shims
+
+Two small polyfills that add modern array methods and `JSON` support to Adobe ExtendScript.
+
+The ExtendScript engine used by InDesign, Illustrator, Photoshop, After Effects, and the other Creative Cloud apps is ES3-era. That means no `Array.prototype.indexOf`, `forEach`, `map`, `filter`, or `includes`, and in older hosts no `JSON` object at all. This file fills both gaps so you can write scripts the way you would anywhere else.
+
+There are no dependencies and nothing to build. It is a single `.jsx` file you include and call.
+
+## Usage
+
+Include the file once near the top of your script, then call both initializers before you use anything they provide:
+
+```javascript
+#include "extendscript-shims.jsx"
+
+enableModernArrayMethods();
+ensureJSONCompatibility();
+
+// from here on, these work:
+var names = products.map(function (p) { return p.name; });
+var active = products.filter(function (p) { return p.inStock; });
+var config = JSON.parse(File.read(configFile));
+var out = JSON.stringify({ updated: new Date(), count: names.length });
+```
+
+Both functions are idempotent. They only install a method if the host does not already provide it, so calling them on a newer engine that already has these built in is a no-op and will not clobber the native versions.
+
+## What you get
+
+`enableModernArrayMethods()` installs `indexOf`, `forEach`, `map`, `filter`, and `includes` on `Array.prototype`, following the ES5 semantics (sparse arrays are respected, `includes` matches `NaN`, the callbacks receive `(value, index, array)`).
+
+`ensureJSONCompatibility()` installs `JSON.parse` and `JSON.stringify`:
+
+- `JSON.parse` validates the input structure before evaluating it, so it rejects anything that is not well-formed JSON instead of running it. It is based on the validation logic in Douglas Crockford's json2.js.
+- `JSON.stringify` escapes the full set of control characters, serializes `NaN` and `Infinity` as `null`, honors a `toJSON()` method when one is present (so `Date` and custom types serialize sensibly), and handles backslashes correctly so Windows paths like `C:\Users\...` come out as valid JSON.
+
+## Two things worth knowing
+
+**Array methods are enumerable.** ExtendScript has no reliable `Object.defineProperty`, so the array methods are added as ordinary enumerable properties on `Array.prototype`. A `for (var k in someArray)` loop will therefore also visit `indexOf`, `forEach`, and the rest. If you iterate arrays with `for...in` anywhere, guard the body with `hasOwnProperty`, or just use an indexed `for` loop. Indexed loops and the new methods themselves are unaffected.
+
+**`JSON.parse` is strict.** It throws on malformed input rather than attempting to evaluate it. That is the point, but if you are migrating from a looser parser that tolerated slightly off strings, expect those calls to start throwing.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
