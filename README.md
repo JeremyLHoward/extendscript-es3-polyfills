@@ -1,4 +1,4 @@
-# ExtendScript ES3 Shims
+# ExtendScript ES3 Polyfill Shims
 
 Two small polyfills that add modern array methods and `JSON` support to Adobe ExtendScript.
 
