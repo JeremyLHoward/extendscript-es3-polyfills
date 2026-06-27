@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "name": "ExtendScript shims test fixture",
+    "version": 1,
+    "active": true,
+    "released": null
+  },
+  "numbers": {
+    "int": 42,
+    "negative": -17,
+    "decimal": 3.14159,
+    "exponent": 6.022e23,
+    "negExponent": -1.6e-19,
+    "zero": 0
+  },
+  "strings": {
+    "plain": "hello world",
+    "withTab": "col1\tcol2",
+    "withNewline": "line1\nline2",
+    "withQuote": "she said \"hi\"",
+    "windowsPath": "C:\\Users\\jeremy\\Documents",
+    "unicode": "caf\u00e9 na\u00efve r\u00e9sum\u00e9",
+    "empty": ""
+  },
+  "fruits": ["apple", "banana", "cherry", "date", "banana"],
+  "scores": [88, 92, 75, 60, 95],
+  "mixed": [1, "two", true, null, 3.5],
+  "matrix": [[1, 2], [3, 4], [5, 6]],
+  "people": [
+    { "name": "Ada", "active": true, "roles": ["dev", "lead"] },
+    { "name": "Linus", "active": false, "roles": ["dev"] },
+    { "name": "Grace", "active": true, "roles": ["dev", "admin", "lead"] }
+  ],
+  "emptyArray": [],
+  "emptyObject": {}
+}
