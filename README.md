@@ -44,10 +44,10 @@ Both functions are idempotent. They only install a method if the host does not a
 
 The `tests/` folder contains a harness that asserts every function the shims provide:
 
-- `test/shim-test.jsx` runs the checks and reports results.
-- `test/shim-test-fixture.json` is the sample data the parse and array tests read from.
+- `tests/shim-test.jsx` runs the checks and reports results.
+- `tests/shim-test-fixture.json` is the sample data the parse and array tests read from.
 
-Run the harness from the ExtendScript Toolkit, the VS Code ExtendScript Debugger, or a host app's Scripts panel, with all three files (`shim-test.jsx`, `shim-test-fixture.json`, and `extendscript-polyfills.jsx`) reachable from where it runs. It prints a `PASS` or `FAIL` line per check to the console, writes a `shim-test-results.txt` log next to the script, and shows a pass/fail summary in an alert when a host app is available. Run it from a saved file rather than a pasted console snippet, since it uses `$.fileName` to locate the fixture (there is a file picker fallback if that comes up empty).
+Keep the harness and fixture together in `tests/`, with `extendscript-polyfills.jsx` in the repo root one level up. The harness includes it with `../extendscript-polyfills.jsx`. Run the harness from the ExtendScript Toolkit, the VS Code ExtendScript Debugger, or a host app's Scripts panel. It prints a `PASS` or `FAIL` line per check to the console, writes a `shim-test-results.txt` log next to the script, and shows a pass/fail summary in an alert when a host app is available. Run it from a saved file rather than a pasted console snippet, since it uses `$.fileName` to locate the fixture (there is a file picker fallback if that comes up empty).
 
 The tests cover the array methods (including the `null` and `NaN` cases for `includes`), the full range of `JSON.parse` decoding and its rejection of malformed and non-string input, the `JSON.stringify` edge cases that plain JSON cannot express (`NaN`, `Infinity`, `undefined`, functions, raw control characters, the `toJSON` hook), and a parse/stringify round-trip.
 
