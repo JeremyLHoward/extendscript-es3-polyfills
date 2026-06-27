@@ -1,10 +1,12 @@
 //-----------------------------------------------------------------------------------------------------------
-//-- Test harness for extendscript-shims.jsx
+//-- Test harness for extendscript-polyfills.jsx
 //--
-//-- Setup: place this file, extendscript-shims.jsx, and shim-test-fixture.json in the SAME folder,
-//--        then run this file from the ExtendScript Toolkit, the VS Code ExtendScript Debugger, or a
-//--        host app's Scripts panel. Results print to the console, get written to shim-test-results.txt
-//--        next to this script, and a pass/fail summary shows in an alert (when a host app is available).
+//-- Setup: keep this file and shim-test-fixture.json together in tests/, with
+//--        extendscript-polyfills.jsx in the repo root one level up (the #include below points at
+//--        ../extendscript-polyfills.jsx). Run this file from the ExtendScript Toolkit, the VS Code
+//--        ExtendScript Debugger, or a host app's Scripts panel. Results print to the console, get
+//--        written to shim-test-results.txt next to this script, and a pass/fail summary shows in an
+//--        alert (when a host app is available).
 //-----------------------------------------------------------------------------------------------------------
 
 #include "../extendscript-polyfills.jsx"
